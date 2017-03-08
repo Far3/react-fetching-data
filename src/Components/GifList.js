@@ -5,7 +5,7 @@ const GifList = props => {
 
   const results = props.data;
   let gifs = results.map(gif =>
-    <Gif url={gif.images.fixed_height.url} key = {gif.id}/>
+    <Gif url={gif.images.fixed_height.url} key={gif.id}/>
   );
   
   return(
