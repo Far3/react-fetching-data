@@ -10,6 +10,7 @@ export default class App extends Component {
     super();
     this.state = {
       gifs: [],
+      loading: true,
 
     };
   }
@@ -18,11 +19,12 @@ export default class App extends Component {
     this.performSearch();
   }
 
-    performSearch = (query = 'friday') => {
-          axios.get(`http://api.giphy.com/v1/gifs/search?q=${query}&limit=24&api_key=dc6zaTOxFJmzC`)
+    performSearch = (query = 'seinfeld') => {
+          axios.get(`http://api.giphy.com/v1/gifs/search?q=${query}&limit=100&api_key=dc6zaTOxFJmzC`)
       .then(response => {
         this.setState({
-          gifs: response.data.data
+          gifs: response.data.data,
+          loading: false,
         });
       })
       .catch(error => {
@@ -31,7 +33,6 @@ export default class App extends Component {
     }
 
   render() { 
-    console.log(this.state.gifs);
     return (
       <div>
         <div className="main-header">
@@ -41,7 +42,9 @@ export default class App extends Component {
           </div>   
         </div>    
         <div className="main-content">
-          <GifList  data={this.state.gifs}/>
+          {
+            (this.state.loading) ? <h1>Loading...</h1> : <GifList data={this.state.gifs} />            
+          }
         </div>
       </div>
     );
